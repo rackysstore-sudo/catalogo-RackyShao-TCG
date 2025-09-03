@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>RackyS Store - Cartas Pokémon</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo-section">
+        <h1>RackyS Store</h1>
+        <p class="subtitle">Tu tienda especializada en Pokémon TCG</p>
+      </div>
+      <div class="header-right">
+        <!-- Buscador en el header -->
+        <div class="header-search">
+          <div class="search-input-container">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="text" id="header-search-input" placeholder="Buscar productos...">
+          </div>
+        </div>
+        
+        <nav>
+          <a href="#singles" class="nav-link">Cartas Singles</a>
+          <a href="#accesorios" class="nav-link">Accesorios</a>
+          <a href="#contacto" class="nav-link">Contacto</a>
+          <button id="cart-btn" class="cart-btn">
+            🛒 Carrito (<span id="cart-count">0</span>)
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Carrito Modal -->
+    <div id="cart-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>🛒 Tu Carrito</h2>
+          <span class="close-modal" id="close-cart">&times;</span>
+        </div>
+        <div id="cart-items" class="cart-items">
+          <p class="empty-cart">Tu carrito está vacío</p>
+        </div>
+        <div class="cart-footer">
+          <div class="cart-total">
+            <strong>Total: S/ <span id="cart-total">0.00</span></strong>
+          </div>
+          <div class="cart-actions">
+            <button id="clear-cart" class="btn-secondary">Limpiar Carrito</button>
+            <button id="checkout-btn" class="btn-primary">Proceder al Pago</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal">
+      <div class="modal-content product-detail">
+        <span class="close-modal" id="close-product">&times;</span>
+        <div id="product-detail-content">
+          <!-- Content will be injected here -->
+        </div>
+      </div>
+    </div>
+
+    <section id="singles">
+      <div class="section-header">
+        <h2>Cartas Individuales (Singles)</h2>
+        <p class="section-desc">Encuentra las mejores cartas para tu colección</p>
+        
+        <!-- Buscador específico para cartas -->
+        <div class="cards-search">
+          <div class="search-input-container">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="text" id="cards-search-input" placeholder="Buscar cartas por nombre...">
+          </div>
+        </div>
+      </div>
+      
+      <div class="catalog-layout">
+        <!-- Sidebar Filters -->
+        <aside class="filters-sidebar">
+          <div class="filters-header-sidebar">
+            <h3>🔍 Filtros</h3>
+            <button id="toggle-filters" class="toggle-filters">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="4" y1="21" x2="4" y2="14"></line>
+                <line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line>
+                <line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line>
+                <line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="filters-content">
+            <!-- Recomendadas -->
+            <div class="filter-section">
+              <h4>⭐ Recomendadas</h4>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" id="recommended-filter" class="filter-checkbox">
+                  <span class="checkmark"></span>
+                  Solo cartas recomendadas
+                </label>
+              </div>
+            </div>
+
+            <!-- Tipo de Carta -->
+            <div class="filter-section">
+              <h4>🃏 Tipo de Carta</h4>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" value="pokemon" class="type-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Pokémon
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="trainer" class="type-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Trainer
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="supporter" class="type-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Partidario
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="item" class="type-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Objeto
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="stadium" class="type-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Estadio
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="energy" class="type-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Energía
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="special-energy" class="type-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Energía Especial
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="tools" class="type-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Herramienta
+                </label>
+              </div>
+            </div>
+
+            <!-- Rarezas -->
+            <div class="filter-section">
+              <h4>⭐ Rareza</h4>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" value="ultra-rara" class="rarity-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Ultra Rara
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="rara" class="rarity-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Rara
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="comun" class="rarity-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Común
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="holo-rara" class="rarity-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Holo Rara
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="secret-rare" class="rarity-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Secret Rare
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="illustration-rare" class="rarity-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Illustration Rare
+                </label>
+              </div>
+            </div>
+
+            <!-- Expansiones -->
+            <div class="filter-section">
+              <h4>📦 Expansiones</h4>
+              <div class="expansion-search">
+                <input type="text" id="expansion-search" placeholder="Buscar expansión...">
+              </div>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" value="vivid-voltage" class="set-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Vivid Voltage
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="darkness-ablaze" class="set-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Darkness Ablaze
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="sword-shield" class="set-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Sword & Shield
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="rebel-clash" class="set-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Rebel Clash
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="evolving-skies" class="set-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Evolving Skies
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="destined-rivals" class="set-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Destined Rivals
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="stellar-crown" class="set-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Stellar Crown
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="surging-sparks" class="set-checkbox filter-checkbox">
+                  <span class="checkmark"></span>
+                  Surging Sparks
+                </label>
+              </div>
+            </div>
+            
+            <div class="filter-section">
+              <h4>🌐 Idioma</h4>
+              <select id="language-filter">
+                <option value="">Todos los idiomas</option>
+                <option value="ingles">Inglés</option>
+                <option value="español">Español</option>
+                <option value="japones">Japonés</option>
+                <option value="portugues">Portugués</option>
+              </select>
+            </div>
+            
+            <div class="filter-section">
+              <h4>💰 Precio</h4>
+              <div class="price-range-inputs">
+                <div class="price-input-group">
+                  <label for="min-price">Mínimo:</label>
+                  <input type="number" id="min-price" min="0" value="0" step="1" placeholder="0">
+                </div>
+                <div class="price-input-group">
+                  <label for="max-price">Máximo:</label>
+                  <input type="number" id="max-price" min="0" value="100" step="1" placeholder="Sin límite">
+                </div>
+                <div class="price-display-range">
+                  <span id="price-range-display">S/ 0 - S/ 100</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-section">
+              <h4>📊 Ordenar por</h4>
+              <select id="sort-filter">
+                <option value="recommended">Recomendados</option>
+                <option value="price-low">Precio: más bajo</option>
+                <option value="price-high">Precio: más alto</option>
+                <option value="name-az">A-Z</option>
+                <option value="name-za">Z-A</option>
+                <option value="rarity">Rareza</option>
+              </select>
+            </div>
+
+            <div class="filter-section">
+              <button id="reset-filters" class="reset-filters-btn">Limpiar Filtros</button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="catalog-main">
+          <!-- Results Header -->
+          <div class="results-header">
+            <div class="results-info">
+              <span id="results-count">Mostrando 12 de 12 cartas</span>
+            </div>
+            <div class="view-options">
+              <button class="view-btn active" data-view="grid">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+              </button>
+              <button class="view-btn" data-view="list">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="8" y1="6" x2="21" y2="6"></line>
+                  <line x1="8" y1="12" x2="21" y2="12"></line>
+                  <line x1="8" y1="18" x2="21" y2="18"></line>
+                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cards Catalog -->
+          <div class="catalog" id="singles-catalog">
+            <!-- Ultra Raras Pokémon -->
+            <div class="card" data-set="destined-rivals" data-rarity="ultra-rara" data-language="ingles" data-price="40" data-id="1" data-type="pokemon" data-recommended="true">
+              <div class="card-image">
+                <img src="https://cdn.cardsrealm.com/images/cartas/svp-scarlet-violet-black-star-promos/EN/med/stevens-beldum-svp-207-207.png?5964?&width=250" alt="Steven's Beldum">
+                <div class="rarity-badge ultra-rara">Ultra Rara</div>
+                <div class="type-badge pokemon">Pokémon</div>
+                <div class="recommended-badge">⭐ Recomendada</div>
+              </div>
+              <div class="card-content">
+                <h3>Steven's Beldum Promo</h3>
+                <div class="card-details">
+                  <span class="set-name">Destined Rivals</span>
+                  <span class="language">🇺🇸 Inglés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 40.00</span>
+                  <span class="stock">1 disponible</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="destined-rivals" data-rarity="illustration-rare" data-language="japones" data-price="35" data-id="2" data-type="pokemon" data-recommended="true">
+              <div class="card-image">
+                <img src="https://i.ebayimg.com/images/g/WQcAAeSwWZNn84Ut/s-l1600.webp" alt="Shaymin">
+                <div class="rarity-badge illustration-rare">Illustration Rare</div>
+                <div class="type-badge pokemon">Pokémon</div>
+                <div class="recommended-badge">⭐ Recomendada</div>
+              </div>
+              <div class="card-content">
+                <h3>Shaymin Illustration Rare</h3>
+                <div class="card-details">
+                  <span class="set-name">Destined Rivals</span>
+                  <span class="language">🇯🇵 Japonés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 35.00</span>
+                  <span class="stock">1 disponible</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="sword-shield" data-rarity="ultra-rara" data-language="ingles" data-price="35" data-id="3" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh1/136.png" alt="Lapras">
+                <div class="rarity-badge ultra-rara">Ultra Rara</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Lapras VMAX</h3>
+                <div class="card-details">
+                  <span class="set-name">Sword & Shield</span>
+                  <span class="language">🇺🇸 Inglés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 35.00</span>
+                  <span class="stock">1 disponible</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="rebel-clash" data-rarity="ultra-rara" data-language="español" data-price="25" data-id="4" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh2/106.png" alt="Snorlax">
+                <div class="rarity-badge ultra-rara">Ultra Rara</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Snorlax V</h3>
+                <div class="card-details">
+                  <span class="set-name">Rebel Clash</span>
+                  <span class="language">🇪🇸 Español</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 25.00</span>
+                  <span class="stock">3 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="evolving-skies" data-rarity="ultra-rara" data-language="ingles" data-price="50" data-id="5" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh45/25.png" alt="Rayquaza">
+                <div class="rarity-badge ultra-rara">Ultra Rara</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Rayquaza V</h3>
+                <div class="card-details">
+                  <span class="set-name">Evolving Skies</span>
+                  <span class="language">🇺🇸 Inglés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 50.00</span>
+                  <span class="stock">1 disponible</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Raras -->
+            <div class="card" data-set="darkness-ablaze" data-rarity="rara" data-language="español" data-price="15" data-id="6" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh3/19.png" alt="Pikachu">
+                <div class="rarity-badge rara">Rara</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Pikachu Holo</h3>
+                <div class="card-details">
+                  <span class="set-name">Darkness Ablaze</span>
+                  <span class="language">🇪🇸 Español</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 15.00</span>
+                  <span class="stock">5 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="vivid-voltage" data-rarity="rara" data-language="ingles" data-price="12" data-id="7" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh4/11.png" alt="Alakazam">
+                <div class="rarity-badge rara">Rara</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Alakazam Holo</h3>
+                <div class="card-details">
+                  <span class="set-name">Vivid Voltage</span>
+                  <span class="language">🇺🇸 Inglés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 12.00</span>
+                  <span class="stock">3 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="sword-shield" data-rarity="rara" data-language="japones" data-price="18" data-id="8" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh1/22.png" alt="Rillaboom">
+                <div class="rarity-badge rara">Rara</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Rillaboom Holo</h3>
+                <div class="card-details">
+                  <span class="set-name">Sword & Shield</span>
+                  <span class="language">🇯🇵 Japonés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 18.00</span>
+                  <span class="stock">2 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Comunes -->
+            <div class="card" data-set="rebel-clash" data-rarity="comun" data-language="español" data-price="3" data-id="9" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh2/139.png" alt="Psyduck">
+                <div class="rarity-badge comun">Común</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Psyduck</h3>
+                <div class="card-details">
+                  <span class="set-name">Rebel Clash</span>
+                  <span class="language">🇪🇸 Español</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 3.00</span>
+                  <span class="stock">10 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="vivid-voltage" data-rarity="comun" data-language="ingles" data-price="2" data-id="10" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh4/52.png" alt="Charmander">
+                <div class="rarity-badge comun">Común</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Charmander</h3>
+                <div class="card-details">
+                  <span class="set-name">Vivid Voltage</span>
+                  <span class="language">🇺🇸 Inglés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 2.00</span>
+                  <span class="stock">15 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="darkness-ablaze" data-rarity="comun" data-language="japones" data-price="4" data-id="11" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh3/73.png" alt="Squirtle">
+                <div class="rarity-badge comun">Común</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Squirtle</h3>
+                <div class="card-details">
+                  <span class="set-name">Darkness Ablaze</span>
+                  <span class="language">🇯🇵 Japonés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 4.00</span>
+                  <span class="stock">8 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="evolving-skies" data-rarity="comun" data-language="español" data-price="2" data-id="12" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh7/21.png" alt="Bulbasaur">
+                <div class="rarity-badge comun">Común</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Bulbasaur</h3>
+                <div class="card-details">
+                  <span class="set-name">Evolving Skies</span>
+                  <span class="language">🇪🇸 Español</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 2.00</span>
+                  <span class="stock">12 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Trainer Cards -->
+            <div class="card" data-set="sword-shield" data-rarity="comun" data-language="portugues" data-price="5" data-id="13" data-type="supporter">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh1/178.png" alt="Professor's Research">
+                <div class="rarity-badge comun">Común</div>
+                <div class="type-badge supporter">Partidario</div>
+              </div>
+              <div class="card-content">
+                <h3>Professor's Research</h3>
+                <div class="card-details">
+                  <span class="set-name">Sword & Shield</span>
+                  <span class="language">🇵🇹 Portugués</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 5.00</span>
+                  <span class="stock">8 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="vivid-voltage" data-rarity="rara" data-language="ingles" data-price="8" data-id="14" data-type="item">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh4/185.png" alt="Quick Ball">
+                <div class="rarity-badge rara">Rara</div>
+                <div class="type-badge item">Objeto</div>
+              </div>
+              <div class="card-content">
+                <h3>Quick Ball</h3>
+                <div class="card-details">
+                  <span class="set-name">Vivid Voltage</span>
+                  <span class="language">🇺🇸 Inglés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 8.00</span>
+                  <span class="stock">6 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="rebel-clash" data-rarity="comun" data-language="español" data-price="3" data-id="15" data-type="energy">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh2/169.png" alt="Basic Energy">
+                <div class="rarity-badge comun">Común</div>
+                <div class="type-badge energy">Energía</div>
+              </div>
+              <div class="card-content">
+                <h3>Fire Energy</h3>
+                <div class="card-details">
+                  <span class="set-name">Rebel Clash</span>
+                  <span class="language">🇪🇸 Español</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 3.00</span>
+                  <span class="stock">20 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="darkness-ablaze" data-rarity="ultra-rara" data-language="japones" data-price="15" data-id="16" data-type="special-energy">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh3/176.png" alt="Double Turbo Energy">
+                <div class="rarity-badge ultra-rara">Ultra Rara</div>
+                <div class="type-badge special-energy">Energía Especial</div>
+              </div>
+              <div class="card-content">
+                <h3>Double Turbo Energy</h3>
+                <div class="card-details">
+                  <span class="set-name">Darkness Ablaze</span>
+                  <span class="language">🇯🇵 Japonés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 15.00</span>
+                  <span class="stock">4 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nuevas cartas Ultra Raras -->
+            <div class="card" data-set="evolving-skies" data-rarity="ultra-rara" data-language="español" data-price="45" data-id="17" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh7/89.png" alt="Umbreon VMAX">
+                <div class="rarity-badge ultra-rara">Ultra Rara</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Umbreon VMAX</h3>
+                <div class="card-details">
+                  <span class="set-name">Evolving Skies</span>
+                  <span class="language">🇪🇸 Español</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 45.00</span>
+                  <span class="stock">2 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="vivid-voltage" data-rarity="ultra-rara" data-language="portugues" data-price="30" data-id="18" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh4/200.png" alt="Coalossal VMAX">
+                <div class="rarity-badge ultra-rara">Ultra Rara</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Coalossal VMAX</h3>
+                <div class="card-details">
+                  <span class="set-name">Vivid Voltage</span>
+                  <span class="language">🇵🇹 Portugués</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 30.00</span>
+                  <span class="stock">3 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nuevas cartas Raras -->
+            <div class="card" data-set="rebel-clash" data-rarity="rara" data-language="ingles" data-price="10" data-id="19" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh2/15.png" alt="Toxapex">
+                <div class="rarity-badge rara">Rara</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Toxapex Holo</h3>
+                <div class="card-details">
+                  <span class="set-name">Rebel Clash</span>
+                  <span class="language">🇺🇸 Inglés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 10.00</span>
+                  <span class="stock">4 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="sword-shield" data-rarity="rara" data-language="portugues" data-price="14" data-id="20" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh1/68.png" alt="Corviknight">
+                <div class="rarity-badge rara">Rara</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Corviknight Holo</h3>
+                <div class="card-details">
+                  <span class="set-name">Sword & Shield</span>
+                  <span class="language">🇵🇹 Portugués</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 14.00</span>
+                  <span class="stock">3 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nuevas cartas Comunes -->
+            <div class="card" data-set="darkness-ablaze" data-rarity="comun" data-language="ingles" data-price="1" data-id="21" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh3/85.png" alt="Snorlax">
+                <div class="rarity-badge comun">Común</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Snorlax</h3>
+                <div class="card-details">
+                  <span class="set-name">Darkness Ablaze</span>
+                  <span class="language">🇺🇸 Inglés</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 1.00</span>
+                  <span class="stock">20 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-set="vivid-voltage" data-rarity="comun" data-language="portugues" data-price="2" data-id="22" data-type="pokemon">
+              <div class="card-image">
+                <img src="https://images.pokemontcg.io/swsh4/94.png" alt="Machamp">
+                <div class="rarity-badge comun">Común</div>
+                <div class="type-badge pokemon">Pokémon</div>
+              </div>
+              <div class="card-content">
+                <h3>Machamp</h3>
+                <div class="card-details">
+                  <span class="set-name">Vivid Voltage</span>
+                  <span class="language">🇵🇹 Portugués</span>
+                </div>
+                <div class="condition">Near Mint</div>
+                <div class="price-stock">
+                  <span class="price">S/ 2.00</span>
+                  <span class="stock">15 disponibles</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="accesorios">
+      <div class="section-header">
+        <h2>🛡️ Accesorios</h2>
+        <p class="section-desc">Todo lo que necesitas para proteger y organizar tus cartas</p>
+      </div>
+      
+      <div class="accessory-categories">
+        <div class="category-section">
+          <h3>📦 Deck Boxes</h3>
+          <div class="catalog">
+            <div class="accessory-card" data-id="acc1" data-price="8">
+              <div class="card-image">
+                <img src="https://via.placeholder.com/200x200/FF6B35/FFFFFF?text=Deck+Box" alt="Deck Box">
+              </div>
+              <div class="card-content">
+                <h3>Deck Box Ultra Pro</h3>
+                <div class="card-details">
+                  <span class="accessory-type">Protección</span>
+                  <span class="color">Color: Naranja</span>
+                </div>
+                <div class="price-stock">
+                  <span class="price">S/ 8.00</span>
+                  <span class="stock">10 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="accessory-card" data-id="acc2" data-price="12">
+              <div class="card-image">
+                <img src="https://via.placeholder.com/200x200/F7931E/FFFFFF?text=Deck+Box+Pro" alt="Deck Box Pro">
+              </div>
+              <div class="card-content">
+                <h3>Deck Box Premium</h3>
+                <div class="card-details">
+                  <span class="accessory-type">Protección</span>
+                  <span class="color">Color: Mienshao</span>
+                </div>
+                <div class="price-stock">
+                  <span class="price">S/ 12.00</span>
+                  <span class="stock">8 disponibles</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="category-section">
+          <h3>🛡️ Protectores & Sleeves</h3>
+          <div class="catalog">
+            <div class="accessory-card" data-id="acc3" data-price="25">
+              <div class="card-image">
+                <img src="https://via.placeholder.com/200x200/FF8C42/FFFFFF?text=Sleeves" alt="Sleeves">
+              </div>
+              <div class="card-content">
+                <h3>Sleeves Dragon Shield</h3>
+                <div class="card-details">
+                  <span class="accessory-type">Sleeves</span>
+                  <span class="color">Pack de 100</span>
+                </div>
+                <div class="price-stock">
+                  <span class="price">S/ 25.00</span>
+                  <span class="stock">15 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="accessory-card" data-id="acc4" data-price="18">
+              <div class="card-image">
+                <img src="https://via.placeholder.com/200x200/FF6B35/FFFFFF?text=Toploader" alt="Toploader">
+              </div>
+              <div class="card-content">
+                <h3>Toploaders</h3>
+                <div class="card-details">
+                  <span class="accessory-type">Protectores</span>
+                  <span class="color">Pack de 50</span>
+                </div>
+                <div class="price-stock">
+                  <span class="price">S/ 18.00</span>
+                  <span class="stock">20 disponibles</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="category-section">
+          <h3>🎮 Playmats</h3>
+          <div class="catalog">
+            <div class="accessory-card" data-id="acc5" data-price="35">
+              <div class="card-image">
+                <img src="https://via.placeholder.com/200x200/6A4C93/FFFFFF?text=Playmat" alt="Playmat">
+              </div>
+              <div class="card-content">
+                <h3>Playmat Mienshao</h3>
+                <div class="card-details">
+                  <span class="accessory-type">Tapete de juego</span>
+                  <span class="color">Edición especial</span>
+                </div>
+                <div class="price-stock">
+                  <span class="price">S/ 35.00</span>
+                  <span class="stock">5 disponibles</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="accessory-card" data-id="acc6" data-price="45">
+              <div class="card-image">
+                <img src="https://via.placeholder.com/200x200/F7931E/FFFFFF?text=Playmat+Pro" alt="Playmat Pro">
+              </div>
+              <div class="card-content">
+                <h3>Playmat Profesional</h3>
+                <div class="card-details">
+                  <span class="accessory-type">Tapete de juego</span>
+                  <span class="color">Diseño personalizado</span>
+                </div>
+                <div class="price-stock">
+                  <span class="price">S/ 45.00</span>
+                  <span class="stock">3 disponibles</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>RackyS Store</h3>
+        <p>Tu tienda de confianza para cartas Pokémon TCG</p>
+      </div>
+      <div class="footer-section">
+        <h4>📞 Contacto</h4>
+        <p>📧 Email: info@rackysstore.com</p>
+        <p>📱 WhatsApp: +51 938 104 637</p>
+      </div>
+      <div class="footer-section">
+        <h4>Síguenos</h4>
+        <p>Facebook | Instagram | TikTok</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 RackyS Store - Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <!-- Botón flotante de WhatsApp -->
+  <a href="https://wa.me/51938104637" target="_blank" class="whatsapp-float" title="¡Contacta a un asesor!">
+    <div class="whatsapp-content">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+      </svg>
+      <span class="whatsapp-text">¡CONTACTA A UN ASESOR!</span>
+    </div>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>
